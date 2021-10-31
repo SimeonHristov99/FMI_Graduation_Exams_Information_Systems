@@ -10,6 +10,16 @@ public:
     {
     }
 
+    bool operator==(const Point2D &rhs) const
+    {
+        return x == rhs.x && y == rhs.y;
+    }
+
+    bool operator<(const Point2D &rhs) const // Euclidean distance
+    {
+        return (x * x + y * y) < (rhs.x * rhs.x + rhs.y * rhs.y);
+    }
+
 private:
     double x;
     double y;
@@ -23,8 +33,25 @@ public:
     {
     }
 
-    PointSet2D operator+(std::vector<Point2D> rhs) const
+    PointSet2D operator+(std::vector<Point2D> rhs)
     {
+        PointSet2D result = *this;
+
+        for (auto p : rhs)
+        {
+            result.pts.insert(p);
+        }
+
+        return result;
+    }
+
+    PointSet2D operator+=(std::vector<Point2D> rhs)
+    {
+        for (auto p : rhs)
+        {
+            pts.insert(p);
+        }
+
         return *this;
     }
 
