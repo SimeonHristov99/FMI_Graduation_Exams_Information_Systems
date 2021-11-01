@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <set>
+#include <cmath>
 
 class Point2D
 {
@@ -8,6 +9,16 @@ public:
     Point2D(double _x = 0, double _y = 0)
         : x(_x), y(_y)
     {
+    }
+
+    double get_x() const
+    {
+        return x;
+    }
+
+    double get_y() const
+    {
+        return y;
     }
 
     void move(const double new_x, const double new_y) // for testing puposes
@@ -83,13 +94,23 @@ public:
         return *this;
     }
 
+    std::set<Point2D>::iterator begin() const
+    {
+        return pts.begin();
+    }
+
+    std::set<Point2D>::iterator end() const
+    {
+        return pts.end();
+    }
+
     // for testing puposes
     friend std::ostream &operator<<(std::ostream &out, const PointSet2D &points)
     {
         out << "[ ";
-        for (std::set<Point2D>::iterator it = points.pts.cbegin(); it != points.pts.cend(); ++it)
+        for (const Point2D& p : points)
         {
-            out << *it << ' ';
+            out << p << ' ';
         }
         out << ']';
 
@@ -99,6 +120,25 @@ public:
 private:
     std::set<Point2D> pts;
 };
+
+bool within(const PointSet2D &points, const Point2D &center, double radius)
+{
+    for (const Point2D &p : points)
+    {
+        double x_p = p.get_x();
+        double y_p = p.get_y();
+
+        double x_c = center.get_x();
+        double y_c = center.get_y();
+
+        if ((x_p - x_c) * (x_p - x_c) + (y_p - x_c) * (y_p - x_c) > radius * radius)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 int main(int argc, char const *argv[])
 {
@@ -167,7 +207,14 @@ int main(int argc, char const *argv[])
     // should have an extra p5 and p6
     std::cout << "set 3 after: " << point_set3 << '\n';
 
+    std::cout << "\n\nTraverse set 3:\n";
+    for (const Point2D& p : point_set3) {
+        std::cout << p << '\n';
+    }
 
+    std::cout << std::boolalpha << (within(point_set3, Point2D(0, 0), 6)) << '\n'; // false
+    std::cout << (within(point_set3, Point2D(0, 0), ceil(sqrt(72)))) << '\n'; // true, all are inside, except (6, 6) which is on edge
+    std::cout << (within(point_set3, Point2D(0, 0), 9)) << '\n'; // true, all are inside
 
     return 0;
 }
