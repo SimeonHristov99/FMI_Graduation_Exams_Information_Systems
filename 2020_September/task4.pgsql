@@ -1,6 +1,4 @@
-/*
-Update tables so as to have reasonable outputs.
- */
+-- Update tables so as to have reasonable outputs.
 UPDATE
     movie
 SET
@@ -14,12 +12,7 @@ INSERT INTO studio
 INSERT INTO movie
     VALUES ('TestTitle', 1988, 200, 'Y', 'Fox', 199);
 
-
-/*
-task 1
-
-Should only be 'Fox'
- */
+-- task 1: should only be 'Fox'
 SELECT
     s.name,
     s.address
@@ -34,10 +27,7 @@ HAVING
 ORDER BY
     s.address;
 
-
-/*
-task 2: Fox should not be included
- */
+-- task 2: Fox should not be included
 SELECT
     s.name,
     s.address,
