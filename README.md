@@ -4,4 +4,7 @@ This repository holds solutions of the exams given to 4-th year Information Syst
 
 > **Contributions**: If you want to contribute, send me an email at s.e.hristov99@gmail.com with your GitHub account. Alternatively, raise issues and/or submit PRs.
 
-Note: Open *.svg* files via browser.
+Notes:
+
+- solutions to SQL problems are written in PostgreSQL
+- *.svg* files can be viewed directly in GitHub or via browser
