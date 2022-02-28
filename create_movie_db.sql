@@ -165,3 +165,12 @@ INSERT INTO STARSIN
 
 INSERT INTO STARSIN
   VALUES ('The Usual Suspects', 1995, 'Sandra Bullock')
+
+
+-- Code to recreate schema
+-- Recreate the schema
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+-- Restore default permissions
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
