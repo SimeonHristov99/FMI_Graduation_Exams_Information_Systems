@@ -57,5 +57,20 @@ FROM
                 FROM
                     movieexec)) t ON t.certnum = producercert;
 
--- 4.
+-- 4. в
+SELECT
+    name,
+    title,
+    year
+FROM
+    movie
+    JOIN movieexec ON producercert = certnum
+WHERE
+    certnum = ANY (
+        SELECT
+            producercert
+        FROM
+            movie
+        WHERE
+            title = 'Interstellar');
 
