@@ -34,4 +34,28 @@ GROUP BY
     name;
 
 -- 3.
--- todo
+SELECT
+    starname,
+    title,
+    name,
+    networth
+FROM
+    starsin
+    JOIN movie ON movietitle = title
+        AND movieyear = year
+    JOIN (
+        SELECT
+            certnum,
+            networth,
+            name
+        FROM
+            movieexec
+        WHERE
+            networth = (
+                SELECT
+                    max(networth)
+                FROM
+                    movieexec)) t ON t.certnum = producercert;
+
+-- 4.
+
