@@ -11,28 +11,29 @@ WHERE
 GROUP BY
     c.country;
 
--- 2. B)
+-- 2. A)
 SELECT DISTINCT
     battle
 FROM
-    outcomes o,
-    ships s,
-    classes c
-WHERE
-    o.ship = s.name
-    AND s.class = c.class
-GROUP BY
-    battle
-HAVING
-    COUNT(DISTINCT country) > (
-        SELECT
-            COUNT(country)
-        FROM
-            outcomes o,
-            classes c,
-            ships s
-        WHERE
-            ship = name
-            AND s.class = c.class
-            AND battle = 'Coral Sea');
-
+    outcomes o1
+WHERE (
+    SELECT
+        COUNT(DISTINCT country)
+    FROM
+        outcomes o,
+        ships s,
+        classes c
+    WHERE
+        o.ship = s.name
+        AND s.class = c.class
+        AND battle = o1.battle) > (
+    SELECT
+        count(DISTINCT country)
+    FROM
+        outcomes o,
+        ships s,
+        classes c
+    WHERE
+        o.ship = s.name
+        AND s.class = c.class
+        AND battle = 'Coral Sea')
