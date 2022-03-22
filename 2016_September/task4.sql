@@ -1,13 +1,14 @@
--- 1 Б)
+-- 1 A)
 SELECT
     c.country,
     COUNT(o.result)
 FROM
     classes c
-    JOIN ships s ON c.class = s.class
-    JOIN outcomes o ON s.name = o.ship
+    LEFT JOIN ships s ON c.class = s.class
+    LEFT JOIN outcomes o ON s.name = o.ship
 WHERE
     result = 'sunk'
+    OR result IS NOT NULL
 GROUP BY
     c.country;
 
