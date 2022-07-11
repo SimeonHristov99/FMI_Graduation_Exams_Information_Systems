@@ -1,0 +1,63 @@
+<!DOCTYPE Autobiography [
+    <!ELEMENT Autobiography (people)>
+    <!ELEMENT people (person*)>
+    <!ELEMENT person (names, birthdate, address, birthplace, citizenship, telephone_number, email,education_centers)>
+    <!ELEMENT names (first, middle*, last)>
+    <!ELEMENT birthdate (year, month, day)>
+    <!ELEMENT address (country, city, street?, number?)>
+    <!ELEMENT first (#PCDATA)>
+    <!ELEMENT middle (#PCDATA)>
+    <!ELEMENT last (#PCDATA)>
+    <!ELEMENT year (#PCDATA)>
+    <!ELEMENT month (#PCDATA)>
+    <!ELEMENT day (#PCDATA)>
+    <!ELEMENT birthplace (address)>
+    <!ELEMENT citizenship (#PCDATA)>
+    <!ELEMENT country (#PCDATA)>
+    <!ELEMENT city (#PCDATA)>
+    <!ELEMENT street (#PCDATA)>
+    <!ELEMENT number (#PCDATA)>
+    <!ELEMENT telephone_number (#PCDATA)>
+    <!ELEMENT email (#PCDATA)>
+    <!ELEMENT education_centers (education_center*)>
+    <!ELEMENT education_center (name, major, graduation_year)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT major (#PCDATA)>
+    <!ELEMENT graduation_year (#PCDATA)>
+    <!ATTLIST education_center type (regular|absentee) #REQUIRED>
+]>
+<Autobiography>
+    <people>
+        <person>
+            <names>
+                <first>TestFirst</first>
+                <last>TestLast</last>
+            </names>
+            <birthdate>
+                <year>1998</year>
+                <month>08</month>
+                <day>08</day>
+            </birthdate>
+            <address>
+                <country>Bulgaria</country>
+                <city>Sofia</city>
+            </address>
+            <birthplace>
+                <address>
+                    <country>Bulgaria</country>
+                    <city>Sofia</city>
+                </address>
+            </birthplace>
+            <citizenship>Bulgarian</citizenship>
+            <telephone_number>+359433221100</telephone_number>
+            <email>f@f.com</email>
+            <education_centers>
+                <education_center type="regular">
+                    <name>n1</name>
+                    <major>is</major>
+                    <graduation_year>2005</graduation_year>
+                </education_center>
+            </education_centers>
+        </person>
+    </people>
+</Autobiography>
