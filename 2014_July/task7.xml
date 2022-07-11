@@ -1,0 +1,43 @@
+<!DOCTYPE StudentNotebook [
+    <!ELEMENT StudentNotebook (student*)>
+    <!ELEMENT student (names, address, birthdate, telephone*)>
+    <!ELEMENT names (name+)>
+    <!ELEMENT name (first, middle?, last)>
+    <!ELEMENT first (#PCDATA)>
+    <!ELEMENT middle (#PCDATA)>
+    <!ELEMENT last (#PCDATA)>
+    <!ELEMENT address (postcode, city, street, number)>
+    <!ELEMENT postcode (#PCDATA)>
+    <!ELEMENT city (#PCDATA)>
+    <!ELEMENT street (#PCDATA)>
+    <!ELEMENT number (#PCDATA)>
+    <!ELEMENT birthdate (year, month, day)>
+    <!ELEMENT year (#PCDATA)>
+    <!ELEMENT month (#PCDATA)>
+    <!ELEMENT day (#PCDATA)>
+    <!ELEMENT telephone (#PCDATA)>
+    <!ATTLIST name kind (family|colleague|acquaintance) #REQUIRED>
+    <!ATTLIST name lang (EN|BG) #IMPLIED>
+    <!ATTLIST telephone kind (home|work) #REQUIRED>
+]>
+<StudentNotebook>
+    <student>
+        <names>
+            <name kind="family">
+                <first>n1</first>
+                <last>n2</last>
+            </name>
+        </names>
+        <address>
+            <postcode>9700</postcode>
+            <city>Sth</city>
+            <street>s1</street>
+            <number>111</number>
+        </address>
+        <birthdate>
+            <year>1993</year>
+            <month>10</month>
+            <day>20</day>
+        </birthdate>
+    </student>
+</StudentNotebook>
