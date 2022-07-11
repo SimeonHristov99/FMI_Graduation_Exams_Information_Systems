@@ -1,0 +1,32 @@
+<!DOCTYPE HotelCatalog [
+    <!ELEMENT HotelCatalog (HotelChain*, Hotel+, Service*)>
+    
+    <!ELEMENT HotelChain (ChainName, ChainOwner*)>
+    <!ELEMENT Hotel (HotelName, HotelAddress, HotelImg)>
+    <!ELEMENT steps (step+)>
+    <!ELEMENT Services (Service+)>
+
+    <!ELEMENT ChainName (#PCDATA)>
+    <!ELEMENT ChainOwner (#PCDATA)>
+
+    <!ELEMENT HotelName (#PCDATA)>
+    <!ELEMENT HotelAddress (#PCDATA)>
+    <!NOTATION JPG SYSTEM "image/jpeg">
+    <!ENTITY hotel_image SYSTEM "hotel_image.jpg" NDATA JPG>
+    <!ELEMENT HotelImg EMPTY>
+    
+    <!ELEMENT ServiceName (#PCDATA)>
+    <!ELEMENT ServiceDescr (#PCDATA)>
+    
+    <!ATTLIST HotelImg photo ENTITY #REQUIRED>
+    <!ATTLIST Service included (YES|NO) "NO">
+    <!ATTLIST Hotel chain (HotelChain) #IMPLIED>
+    <!ATTLIST Hotel service (Services) #IMPLIED>
+]>
+<HotelCatalog>
+    <Hotel>
+        <HotelName>Test</HotelName>
+        <HotelAddress>Test Address</HotelAddress>
+        <HotelImg photo="hotel_image"/>
+    </Hotel>
+</HotelCatalog>
