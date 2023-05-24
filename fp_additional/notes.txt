@@ -1,0 +1,383 @@
+###################################################################################################
+# Hello, Haskell
+###################################################################################################
+
+- if you want to use an online Haskell compiler: https://replit.com/languages/haskell
+- if you want to install Haskell on your machine: https://github.com/SimeonHristov99/FP_IS_22-23/tree/main/GuideForInstallingHaskell
+- if you have some time, feel free to watch some of the tutorials here: https://github.com/SimeonHristov99/FP_IS_22-23#additional-links
+
+
+What is a declaration and what is a definition?
+   int add(const int x, const int y)       <-- ???
+   {                                       <-- ???
+      return x + y;                        <-- ???
+   }                                       <-- ???
+
+
+- VEEERY whitespace sensitive, i.e. tabs, spaces, new lines matter (a lot)
+- comments:
+   - use -- for single line comments
+   - use {--} for multiline comments
+- everything is a function here!
+   - fname :: [type1 -> type2 -> ... ->]returnType
+   - The `add` function from above in Haskell would be: ???
+   - read the following: a = 5 (a :: Int)
+   - a++, ++a <- invalid. use (a + 1)
+- use camel case to name identifiers, i.e. myFunction
+- when passing negative numbers as arguments surround them in brackets
+   - example: helper (-1)
+
+
+Types
+ ❗Important: 1. All types start with a capital letter!
+              2. All types must be known at compile time! (strongly typed language; not the dynamic programming principles)
+              3. If f returns Int, then f cannot return Double! (statically typed language)
+
+ - Bool     -> True False
+
+ - Int      -> whole numbers;          uses 32 bits                (ex. 1, 10, 153)
+ - Integer  -> whole numbers;          unbounded                   (ex. 123456789123456789123456798)
+
+ - Float    -> floating-point numbers; equivalent to float in C++  (ex. 1.52)
+ - Double   -> floating-point numbers; equivalent to double in C++ (ex. 1.5252525252525252525252525252)
+ - Rational -> floating-point numbers; unbounded
+
+ - Char     -> equivalent to char                        in C++ (ex. 'a', '1', 'C', '\n')
+ - String   -> equivalent to std::string and const char* in C++ (ex. "Haskell")
+
+
+Built-in Functions
+ - boolean logical operators: && || not
+
+ - arithmetic:  +, -, * (Only for variables of the same type, i.e. n * m will give an error if n is Int and m - Double)
+ 
+ - division:
+    - for whole numbers:
+        - quotient: div (ex. div 10 5 == 2; div 123 10 == 12)
+        - remainder: mod (ex. mod 10 5 == 0; mod 123 10 == 3) (equivalent to % in C++)
+    - real numbers:
+        - use only "/" (equivalent to "/" in C++, but here it cannot be used for whole numbers)
+ 
+ - power:
+    - use n ^ m  when m is a natural number (i.e. m > 0) (ex. 2 ^ 3 == 8)
+    - use n ** m when m is a floating-point number (ex. 2 ** 0.5 == 1.4142135623730951)
+ 
+ - other: min, max, odd, even, gcd, abs, sqrt (sqrt 2 == 1.4142135623730951; sqrt :: Double -> Double)
+
+ - ❗❗❗ Int -> Double: fromIntegral           (ex. if a is 5, then (fromIntegral a) is 5.0 ) ❗❗❗
+ - ❗❗❗ Double -> Int: ceiling, floor, round, truncate  (ex. round 5.45 == 5)                ❗❗❗
+ - ❗❗❗      != (C++) => /= (Haskell)         (ex. 5 /= 5 == False; True /= False == True)   ❗❗❗
+
+
+The "Hello world" function
+
+    ($) - read this function as "after"; accepts a function as a left parameter and an expression as a right parameter.
+    First it evaluates the expression.
+    Then it passes the result to the function.
+
+        print             $       "Hello world"
+          ^               ^              ^
+         / \             / \            / \
+        /   \           /   \          /   \
+          |               |              |
+          |               |              |
+          |               |              |
+          |               |              |
+       identifier      identifier       a string
+       of a function   of a function
+
+
+What is a predicate?
+   ???
+
+
+Conditions:
+   - if ... then ... else ...
+   - guards. Often denoted by the pipe symbol (|). The equivalent of a switch case in C++. 
+
+
+Type Inference - The Declaration Can Be Skipped
+ - The The Glasgow Haskell Compiler (GHC) can "guess" the types of every function
+     - this ability is called type inference
+ - fname :: [type1 -> type2 -> ... ->]returnType     <= This is not needed
+
+
+###################################################################################################
+# Lists. Higher Order Functions. List Comprehension
+###################################################################################################
+
+General
+ - you can think of them as std::forward_list<a>
+ - all values MUST be of ONE type (homogeneous containers)
+ - [] is the empty list
+    - What is [[]]?
+ - naming conventions:
+    - helper 5 6          <= helper x y
+    BUT
+    - helper [1, 2, 3] [] <= helper xs ys
+
+
+Constructing Lists
+ - [1, 2, 3, 4, 5, 6]
+
+ - by using cons (":") 
+    - 1 : []  => [1] ()
+    - 1 : [2] => [1, 2]
+    - 1 : [2, 3] => [1, 2, 3]
+    - ":" stands for "cons" (construct)
+        - The second argument MUST BE a list!!
+
+ - list comprehension (LC). We'll see it in a bit.
+
+
+Useful built-in functions
+ - check whether a list is empty (i.e. doesn't have any contents)
+    - null xs
+    - using pattern matching (helper [] = error "Empty list")
+    - xs == [] <- Not popular, but valid
+
+ - getting the ith element of a list (analog with a train??)
+    - !!! An error will be thrown if the index is not valid !!!
+
+    - first element (the locomotive)
+        - (x:xs) => x is the first element
+        - head [1, 2, 3] => 1
+
+    - last element
+        - last [1, 2, 3, 4] => 4
+
+    - all but the last element
+        - init [1 .. 5] = [1, 2, 3, 4]
+
+    - get all the wagons of the train
+        - (x:xs) => xs is the tail
+        - tail [1, 2, 3] => [2, 3]
+        - tail [1 .. 5] = [2, 3, 4, 5]
+
+    - the ith element
+        - xs!!5 => The element at INDEX 5 (ex. [1, 2, 3, 4, 5, 6]!!5 == 6)
+        - [1 .. 5] !! 3 = 4
+
+ - is an element in a list?
+    - elem x xs
+        - elem 1 [16, 2, 3, 4] => False
+        - elem 1 [14, 2, 1, 4] => True
+        - elem 1 [1, 2, 3, 4] => True
+
+ - combine the elements of lists
+    - [1, 2, 3] ++ [4, 5, 6] => [1, 2, 3, 4, 5, 6]
+    - This won't work !!!!: concat [1, 2, 3] [4, 5, 6] => [1, 2, 3, 4, 5, 6]
+    - concat [[1, 2, 3], [4, 5, 6]] => [1, 2, 3, 4, 5, 6] !!!!
+
+ - length [1, 2, 3] => 3
+ - reverse [1, 2, 3] => [3, 2, 1]
+ - sum [1 .. 5] = 15 -- 1 + 2 + 3 + 4 + 5
+ - product [1 .. 5] = 120 -- 1 * 2 * 3 * 4 * 5
+ - minimum [2, 5, 6, 2, 1, 2, 6, 0, 45] => 0
+ - maximum [2, 5, 6, 2, 1, 2, 6, 0, 45] => 45
+ - take 5 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] => [1, 2, 3, 4, 5]
+ - drop 5 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] => [6, 7, 8, 9, 10]
+
+
+Useful functions in the module Data.List
+ - Remove duplicates
+      nub [1, 1, 2, 3, 1, 5, 5, 1, 2, 5] => [1,2,3,5]
+
+ - Sort the elements of a list in ascending order
+      sort [5, 4 .. 1] => [1, 2, 3, 4, 5]
+
+ - The group function takes a list and returns a list of lists such that the concatenation of the result is equal to the argument.
+ Moreover, each sublist in the result contains only equal consecutive elements
+      group :: (Eq a) => [a] -> [[a]]
+      group "Mississippi" => ["M","i","ss","i","ss","i","pp","i"]
+
+ - replicate :: Int -> a -> [a]
+      replicate 5 10 -> [10,10,10,10,10]
+
+
+String - a list of characters. Functions are part of the module Data.Char
+ - type String = [Char]
+ - Convert a number to a string
+      show 15 == "15" == ['1', '5']
+ - Convert a string to a number
+      read "15" == 15
+ - Convert a character to a digit
+      digitToInt '5' -> 5 (part of Data.Char)
+ - Convert a digit to a character
+      intToDigit 5 -> '5' (part of Data.Char)
+
+
+List Comprehension - Another Way Of Constructing Lists
+ - [1 .. 6]                                    => [1, 2, 3, 4, 5, 6]
+ - [1, 3 .. 6]                                 => [1, 3, 5]
+ - [ x + 10 | x <- [1 .. 6]]                   => [11, 12, 13, 14, 15, 16]
+ - [ x | x <- [1 .. 6], even x]                => [2, 4, 6]
+ - [ x | x <- [1 .. 6], mod x 3 == 0 && x > 3] => [6]
+
+
+Higher order function
+    A function that accepts at least one function as an argument and/or returns a function.
+
+    Lambda function:
+    (\ x -> f x)
+
+    - map    (\ x -> x + 10)         [1 .. 3]     => ??? (eqiv. map (+10) [1 .. 3])
+    - filter (\ x -> even x)         [1 .. 3]     => ??? (eqiv. filter even [1 .. 3])
+    - all    (\ x -> odd x)          [1 .. 6]     => ???
+    - all    (\ x -> even x)         [2, 4, 6]    => ???
+    - any    (\ x -> odd x)          [2, 4, 6]    => ???
+    - any    (\ x -> mod x 10 == 0)  [20, 44, 61] => ???
+
+
+###################################################################################################
+# Lambda Expressions. Tuples
+###################################################################################################
+
+Lambda Expressions
+   - read from left to right
+   - functions without a name (anonymous)
+      - have to be called or passed as an argument immediately
+      - called "arrow functions" in JS, TS, Frontend Frameworks
+      - in Python: lambda x: x + 1
+      - in C++: https://www.youtube.com/watch?v=mWgmBBz0y8c
+      - Why use lambda functions? https://stackoverflow.com/questions/3259322/why-use-lambda-functionscha
+      - ChatGPT:
+            Lambda functions, also known as anonymous functions, are a type of function in programming that can be defined without a name and can be used in place of a named function in many situations. Here are some reasons why you might want to use lambda functions:
+
+            1. Conciseness: Lambda functions are a way to write short, concise pieces of code that can be easily understood.
+            2. Flexibility: Lambda functions are very flexible and can be used in a variety of different situations, such as sorting and filtering data.
+            3. Function passing: Lambda functions can be passed as arguments to other functions, making it easier to write higher-order functions.
+            4. Improved performance: Using lambda functions can improve performance in certain situations, such as when working with large datasets or when using functional programming techniques.
+            5. Readability: Lambda functions can make code more readable by reducing the number of named functions needed and allowing for more inline code.
+
+            Overall, lambda functions are a powerful tool that can make code more efficient, flexible, and readable.
+
+   - have three parts: brackets, "the slash" \, "the arrow" ->
+      - (\ <parameters> -> <function application>)
+
+   - a lambda that adds 5 to a number:
+   ???
+
+   - a lambda-predicate that checks whether a number is greater than 10:
+   ???
+
+   - a lambda which adds three numbers:
+   ???
+
+   - Remember: The evaluation happens from LEFT TO RIGHT.
+
+   - What is the output of the following code?
+      print $ (\ x y z -> x y z) (\ x y -> x + y) 5 6
+
+
+Function Composition
+   Composition of f and g over x           : f (g x)
+   In Haskell there is an operator for this: (f . g) x
+
+
+Tuples (Vectors) (Ordered pairs)
+
+   - data structures whose size and type of elements have to be explicitly stated (analogy with array in C++)
+   - can hold multiple types (ex. x :: (Int, String, [Double]) is a vector with 3 dimenstions)
+
+   - fst (5, 6) => 5
+   - snd (5, 6) => 6
+
+   Examples:
+   a vector with two coordinates representing a point in 2D space:
+   type Point2D = (Int, Int) -- typedef std::pair<int, int> Point2D;
+
+   Now every function that accepts a Point2D will look like this:
+
+   helper :: Point2D -> Int -- instead of (Int, Int) -> Int. Our new version has more meaning.
+   helper (x, y) = x + y -- this function sums up the coordinates. Notice the pattern matching!
+   -- helper x = fst x + snd x -- only for 2D vectors we can use fst and snd instead of pattern matching
+
+
+Type classes
+
+   We can say that a function should accept numbers in general, not only Int or Double.
+   They are the analog of `template<typename S, typename T>`.
+
+   Example:
+
+   old:
+      helper :: Int -> Int
+
+   new:
+      helper :: (Num a, Num b) => a -> b
+
+
+###################################################################################################
+# Folding (Map Reduce)
+###################################################################################################
+
+foldl <- Start from left using an accumulator as an initial value. Return accumulator if empty list.
+foldl1 <- Start from left using the left-most element as an initial value. If empty list, then error!
+
+foldr <- Start from right using an accumulator as an initial value. Return accumulator if empty list.
+foldr1 <- Start from right using the right-most element as an initial value. If empty list, then error!
+
+
+-- if the list is empty, the result is the initial value z; else
+-- apply f to the first element and the result of folding the rest
+foldr f z []     = z 
+foldr f z (x:xs) = f x (foldr f z xs) 
+
+foldr1 _ [x] = x
+foldr1 f (x:xs) = f x (foldr1 f xs)
+
+-- if the list is empty, the result is the initial value; else
+-- we recurse immediately, making the new initial value the result
+-- of combining the old initial value with the first element.
+foldl f z []     = z                  
+foldl f z (x:xs) = foldl f (f z x) xs
+
+foldl1 _ [x]       = x
+foldl1 f (x:y:zs)  = f (f x y) (foldl1 f zs)
+-- alternative: foldl1 f (x:y:zs) = foldl1 f ((f x y):zs)
+
+foldl (\ acc x -> acc - x) 0 [1, 2, 3]
+
+foldl1 (\ x y -> x - y) [1, 2, 3]
+
+foldr (\ x acc -> x + acc) 0 [1, 2, 3]
+
+foldr1 (\ x y -> x + y) [1, 2, 3]
+
+
+###################################################################################################
+# Algebraic Data Types
+###################################################################################################
+
+the analog of `class` and `struct` in C++
+   can also be used as enumerations
+three parts: name, types (optional), constructors
+the name of the constructors may not match the name of the data type
+
+Syntax:
+
+data <name> [<types>] = <constructors>
+
+-- enumeration
+data Weather = Hot | Cold
+
+-- new type called "Shape"
+-- it can be used to create figures with different number of parameters
+-- in this case: radius for a circle and length of sides for a triangle
+data Shape a = Circle a | Triangle a a a
+
+Note: In order to have the ability to print a shape, we must tell Haskell to redefine the output operator.
+This happens like so:
+
+data Shape a = Circle a | Triangle a a a
+ deriving (Show)
+
+We can also specify the types of each property.
+
+data Shape = Circle {radius :: Int} | Triangle {x :: Int, y :: Int, z :: Int}
+ deriving (Show)
+
+Now these identifiers become getter functions:
+
+print $ radius (Circle 5) -- will print 5
