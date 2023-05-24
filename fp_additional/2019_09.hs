@@ -13,9 +13,12 @@ evaluation "c++"     = evaluation "scheme"
 purity :: String -> [(String, String)]
 purity lang = if lang == "haskell" then [("pure", "true")] else []
 
-addIfNew x l = ???
+addIfNew x l = if notElem x l then x:l else l
 
 annotate db annotators =
-    ??? (\ (item, labels) ->
-        (item, ??? addIfNew labels
-            (??? (\ annotator -> ???) annotators))) db
+    map (\ (item, labels) ->
+        (item, foldr addIfNew labels
+            (concatMap (\ annotator -> annotator item) annotators))) db
+
+-- addIfNew labels x
+-- addIfNew x labels

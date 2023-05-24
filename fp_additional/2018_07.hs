@@ -6,8 +6,8 @@ addDefault val [] = [val]
 addDefault val l = l
 
 sumMinFix fl xl =
-    ???
-        (???
-            (\ f -> ???
-                (addDefault ???
-                    [ ??? | x <- xl, ???])) fl)
+    sum
+        (map
+            (\ f -> minimum
+                (addDefault 0
+                    [ x | x <- xl, f x == x])) fl)

@@ -1,7 +1,7 @@
 main :: IO()
 main = do
     print $ treeWords t == ["abd","ac"]
-    print $ quickSort [3,4,1,1,542,5,23,2,233,-6] == [-6,1,1,2,3,4,5,23,233,542]
+    print $ quickSort [3,4,1,1000, 1,542,5,23,2,233,-6] == [-6,1,1,2,3,4,5,23,233,542,1000]
 
 
 data Tree a = EmptyTree | Node {
@@ -19,17 +19,17 @@ t = Node 'a' (Node 'b' (Node 'd' EmptyTree EmptyTree) EmptyTree) (Node 'c' Empty
 --   /
 --  d
 
-treeWords :: ???
-treeWords ??? = []
-treeWords (Node v EmptyTree EmptyTree) = [[???]]
-treeWords (Node v l r) = map (v:) (??? ++ ???)
+treeWords :: Tree Char -> [String]
+treeWords EmptyTree = []
+treeWords (Node v EmptyTree EmptyTree) = [[v]]
+treeWords (Node v l r) = map (v:) (wl ++ wr)
  where
-     wl = ???
-     wr = ???
+     wl = treeWords l
+     wr = treeWords r
 
-quickSort :: ???
-quickSort [] = ???
-quickSort (x:xs) = ??? ++ ??? ++ ???
+quickSort :: (Ord a) => [a] -> [a]
+quickSort [] = []
+quickSort (x:xs) = quickSort lesser ++ [x] ++ quickSort greater
  where
-     lesser = filter ???
-     greater = filter ???
+     lesser = filter (<=x) xs -- filter (\ y -> y <= x) xs
+     greater = filter (>x) xs

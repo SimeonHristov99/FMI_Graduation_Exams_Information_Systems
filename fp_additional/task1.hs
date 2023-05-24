@@ -1,8 +1,9 @@
 main :: IO()
 main = do
-    print $ min 5 6 == 5
     print $ minIf 15 60 == 15
+    -- print $ minIf (-15) (-60)
     print $ minIf 60 15 == 15
+
     print $ minGuard 15 60 == 15
     print $ minGuard 60 15 == 15
     print $ minBuiltIn 60 15 == 15
@@ -27,4 +28,50 @@ main = do
     print $ inside 10 50 20 == True
     print $ inside 10 50 1 == False
 
+inside :: Int -> Int -> Int -> Bool
+inside start finish x = any (\ num -> num == x) [min start finish .. max start finish]
+-- inside start finish x = elem x [min start finish .. max start finish]
+-- inside start finish x = any (== x) [min start finish .. max start finish]
 
+-- 3.1413465345321
+-- 314.13465345321
+-- 314
+-- 3.14
+
+roundTwoDigButWithMagic :: Double -> Double
+roundTwoDigButWithMagic = (/ 100) . fromIntegral . round . (* 100)
+
+roundTwoDig :: Double -> Double
+roundTwoDig x = (fromIntegral $ round $ x * 100) / 100
+
+avgWhole :: Int -> Int -> Double
+avgWhole x y = (fromIntegral $ x + y) / 2
+
+quotientReal :: Double -> Double -> Int
+quotientReal x d = truncate $ x / d
+
+divReal :: Double -> Double -> Double
+divReal x y = x / y
+
+removeLastDigit :: Int -> Int
+removeLastDigit x = div x 10
+
+divWhole :: Int -> Int -> Double
+divWhole x d = fromIntegral x / fromIntegral d
+
+quotientWhole :: Int -> Int -> Int
+quotientWhole x d = div x d
+
+lastDigit :: Int -> Int
+lastDigit x = mod x 10
+
+minBuiltIn :: Int -> Int -> Int
+minBuiltIn x y = min x y
+
+minGuard :: Int -> Int -> Int
+minGuard x y
+ | x < y = x
+ | otherwise = y
+
+minIf :: Int -> Int -> Int
+minIf x y = if x < y then x else y
