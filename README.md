@@ -12,5 +12,5 @@ Notes:
 
 - solutions to SQL problems are written in PostgreSQL;
 - *.svg* files can be viewed directly in GitHub or via browser;
-- keep in mind that in recent official solutions started coming out. For example, here is the official solution for the tasks given in July 2022: https://intranet.fmi.uni-sofia.bg/index.php/s/uBWyqQVljXQIp8Q ;
+- keep in mind that in recent years official solutions started coming out. For example, here is the official solution for the tasks given in July 2022: https://intranet.fmi.uni-sofia.bg/index.php/s/uBWyqQVljXQIp8Q ;
 - drop me an email if you would like to get the theory topics for the old version of the exam.
